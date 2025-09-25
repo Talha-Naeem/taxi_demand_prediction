@@ -1,0 +1,60 @@
+name: inference-pipeline
+
+on:
+  # workflow_run:
+  #   workflows: ["hourly-taxi-demand-feature-pipeline-with-cache"]
+  #   types:
+  #     - completed
+  schedule:
+    - cron: '30 * * * *' # Runs every hour at minute 30
+  workflow_dispatch: # Allows manual triggering
+
+env:
+  PYTHON_VERSION: 3.12.7
+  UV_VERSION: 0.6.6
+  UV_URL: https://github.com/astral-sh/uv/releases/download/${{ env.UV_VERSION }}/uv-${{ env.UV_VERSION }}-py3-none-any.whl
+
+jobs:
+  inference_pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Cache UV's cache directory
+      - name: Cache UV cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-cache-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.UV_VERSION }}
+
+      # Cache virtual environment based on uv.lock and workflow files
+      - name: Cache Packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.local
+          key: uv-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('**/uv.lock') }}-${{ hashFiles('.github/workflows/*.yml') }}
+
+      # Set up Python
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      # Install UV
+      - name: Install UV
+        run: |
+          curl -sSL ${{ env.UV_URL }} | python - --version ${{ env.UV_VERSION }}
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      # Install dependencies using UV
+      - name: Install Dependencies
+        run: uv sync # Ensures environment matches uv.lock
+
+      # Run inference with environment variables from secrets
+      - name: Generating new batch of predictions
+        env:
+          HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        run: uv run jupyter nbconvert --to notebook --execute \
+          notebooks/14_inference_pipeline.ipynb

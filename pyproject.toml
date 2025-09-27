@@ -27,7 +27,7 @@ dependencies = [
     "streamlit-autorefresh>=1.0.1",
     "seaborn>=0.13.2",
     "dagshub>=0.6.3",
-    "scikit-learn"
+    "scikit-learn>=1.5.0,<1.6.0"
 ]
 
 [project.scripts]

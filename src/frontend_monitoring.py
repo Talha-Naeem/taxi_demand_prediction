@@ -3,6 +3,10 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from src.monitoring import load_predictions, evaluate_predictions
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 
 def main():
     st.set_page_config(page_title="Taxi Demand Monitoring", layout="wide")

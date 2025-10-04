@@ -1,5 +1,7 @@
 import pandas as pd
-import sys, numpy, sklearn
+import sys
+import numpy
+import sklearn
 from datetime import datetime
 from src.logger import get_logger
 from sklearn.metrics import mean_absolute_error, mean_squared_error

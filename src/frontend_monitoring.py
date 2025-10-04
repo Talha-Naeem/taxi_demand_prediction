@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from src.monitoring import load_predictions, evaluate_predictions
+from monitoring import load_predictions, evaluate_predictions
 
 def main():
     st.set_page_config(page_title="Taxi Demand Monitoring", layout="wide")

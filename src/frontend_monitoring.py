@@ -1,7 +1,19 @@
+# src/frontend_monitoring.py
+import os
+import sys
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+
+# --- Ensure project root is on sys.path ---
+# This makes "src" imports work regardless of where Streamlit is run
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+# --- Local imports ---
 from src.monitoring import load_predictions, evaluate_predictions
+
 
 def main():
     st.set_page_config(page_title="Taxi Demand Monitoring", layout="wide")

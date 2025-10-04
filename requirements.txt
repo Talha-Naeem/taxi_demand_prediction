@@ -1,4 +1,5 @@
-scikit-learn==1.5.2 --no-cache-dir
+scikit-learn==1.5.2
+numpy==1.26.4
 fastparquet>=2024.11.0
 geopandas>=1.1.1
 hopsworks>=4.5.0rc2

@@ -1,4 +1,4 @@
-scikit-learn==1.5.2
+scikit-learn==1.4.2
 numpy==1.26.4
 fastparquet>=2024.11.0
 geopandas>=1.1.1

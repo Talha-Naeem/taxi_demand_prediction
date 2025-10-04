@@ -6,13 +6,13 @@ readme = "README.md"
 authors = [
     { name = "talha-naeem", email = "naeemt970@gmail.com" }
 ]
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.12"
 dependencies = [
     "streamlit==1.39.0",
     "pandas==2.2.3",
     "matplotlib==3.9.2",
-    "scikit-learn==1.5.2",
-    "numpy==1.26.4"
+    "numpy==1.26.4",
+    "scikit-learn==1.5.2"
 ]
 
 [project.scripts]

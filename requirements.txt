@@ -1,3 +1,5 @@
+--no-cache-dir
+--force-reinstall
 scikit-learn==1.4.2
 numpy==1.26.4
 fastparquet>=2024.11.0
